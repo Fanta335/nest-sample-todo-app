@@ -6,7 +6,7 @@ export default () => ({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DBNAME,
-    entities: [`../../dist/**/*.entity.{js,ts}`],
+    entities: [`${__dirname}/../**/*entity.{js,ts}`],
     synchronize: true,
   },
 });
