@@ -8,7 +8,7 @@ services:
     container_name: node-api
     build:
       context: "."
-      dockerfile: "Dockerfile.test"
+      dockerfile: "Dockerfile.dev"
     tty: true
     stdin_open: true
     restart: always
