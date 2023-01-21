@@ -22,8 +22,12 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  findById(id: number): Promise<User> {
-    return this.usersRepository.findOneBy({ id });
+  async findById(id: number): Promise<User> {
+    const user = await this.usersRepository.findOneBy({ id });
+    if (!user) {
+      throw new NotFoundException("specified user doesn't exists.");
+    }
+    return user;
   }
 
   async updateUser(id: number, updateUserDTO: UpdateUserDTO): Promise<User> {
@@ -32,5 +36,12 @@ export class UsersService {
       throw new NotFoundException("specified user doesn't exists.");
     }
     return this.usersRepository.findOneBy({ id });
+  }
+
+  async deleteUser(id: number): Promise<void> {
+    const res = await this.usersRepository.delete(id);
+    if (res.affected === 0) {
+      throw new NotFoundException("specified user doesn't exists.");
+    }
   }
 }
