@@ -16,23 +16,24 @@ export class TasksService {
 
   async createTask(dto: CreateTaskDTO): Promise<Task> {
     const { name, authorId } = dto;
+    const newTask = this.tasksRepository.create({ name });
     const taskAuthor = await this.usersService.findById(authorId);
     if (!taskAuthor) {
       throw new NotFoundException("specified user doesn't exists.");
     }
-    const newTask = new Task();
-    newTask.name = name;
     newTask.author = taskAuthor;
-    console.log('new task: ', newTask);
     return this.tasksRepository.save(newTask);
   }
 
   async findAll(): Promise<Task[]> {
-    return this.tasksRepository.find({ relations: { author: true } });
+    return this.tasksRepository.find();
   }
 
   async findById(id: number): Promise<Task> {
-    const task = await this.tasksRepository.findOneBy({ id });
+    const task = await this.tasksRepository.findOne({
+      where: { id },
+      relations: { author: true },
+    });
     if (!task) {
       throw new NotFoundException("specified task doesn't exists.");
     }
@@ -44,7 +45,7 @@ export class TasksService {
     if (res.affected === 0) {
       throw new NotFoundException("specified task doesn't exists.");
     }
-    return this.tasksRepository.findOneBy({ id });
+    return this.findById(id);
   }
 
   async deleteTask(id: number): Promise<void> {

@@ -10,6 +10,7 @@ export class User {
   name: string;
 
   @OneToMany(() => Task, (task) => task.author)
+
   readonly tasks?: Task[];
 
   constructor(name: string) {

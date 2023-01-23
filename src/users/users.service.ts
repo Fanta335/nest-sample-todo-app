@@ -22,8 +22,11 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  async findById(id: number): Promise<User> {
-    const user = await this.usersRepository.findOneBy({ id });
+  async findById(id: number) {
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: { tasks: true },
+    });
     if (!user) {
       throw new NotFoundException("specified user doesn't exists.");
     }
@@ -35,7 +38,7 @@ export class UsersService {
     if (res.affected === 0) {
       throw new NotFoundException("specified user doesn't exists.");
     }
-    return this.usersRepository.findOneBy({ id });
+    return this.usersRepository.findOne({ where: { id } });
   }
 
   async deleteUser(id: number): Promise<void> {
