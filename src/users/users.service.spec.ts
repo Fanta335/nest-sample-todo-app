@@ -12,24 +12,20 @@ describe('UsersService', () => {
     {
       id: 1,
       name: 'Test user 1',
-      createdAt: new Date(),
     },
     {
       id: 2,
       name: 'Test user 2',
-      createdAt: new Date(),
     },
     {
       id: 3,
       name: 'Test user 3',
-      createdAt: new Date(),
     },
   ];
 
   const oneFakeUser = {
     id: 1,
     name: 'Test user 1',
-    createdAt: new Date(),
   };
 
   beforeEach(async () => {
@@ -75,10 +71,13 @@ describe('UsersService', () => {
   describe('findById', () => {
     it('should find one user', () => {
       jest
-        .spyOn(repo, 'findOneBy')
+        .spyOn(repo, 'findOne')
         .mockImplementationOnce(async () => oneFakeUser);
       expect(service.findById(1)).resolves.toEqual(oneFakeUser);
-      expect(repo.findOneBy).toBeCalledWith({ id: 1 });
+      expect(repo.findOne).toBeCalledWith({
+        where: { id: 1 },
+        relations: { tasks: true },
+      });
     });
   });
 
@@ -90,7 +89,7 @@ describe('UsersService', () => {
         generatedMaps: [dto],
       }));
       jest
-        .spyOn(repo, 'findOneBy')
+        .spyOn(repo, 'findOne')
         .mockImplementationOnce(async () => oneFakeUser);
       expect(await service.updateUser(1, { name: 'Updated name' })).toEqual(
         oneFakeUser,

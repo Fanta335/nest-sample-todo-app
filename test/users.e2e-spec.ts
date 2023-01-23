@@ -39,7 +39,6 @@ describe('Users', () => {
     expect(data.body).toEqual({
       ...testUser,
       id: expect.any(Number),
-      createdAt: expect.any(String),
     });
     const users = await request(app.getHttpServer()).get('/users').expect(200);
     expect(users.body).toEqual(expect.any(Array));
@@ -47,7 +46,6 @@ describe('Users', () => {
     expect(users.body[0]).toEqual({
       ...testUser,
       id: expect.any(Number),
-      createdAt: expect.any(String),
     });
     const testUser2 = await request(app.getHttpServer())
       .get(`/users/${data.body.id}`)
@@ -69,7 +67,6 @@ describe('Users', () => {
     expect(data.body).toEqual({
       ...testUser1,
       id: expect.any(Number),
-      createdAt: expect.any(String),
     });
     const testUser2 = await request(app.getHttpServer())
       .get(`/users/${data.body.id}`)
@@ -77,7 +74,6 @@ describe('Users', () => {
     expect(testUser2.body).toEqual({
       ...testUser1,
       id: expect.any(Number),
-      createdAt: expect.any(String),
     });
     const testUser3 = await request(app.getHttpServer())
       .patch(`/users/${testUser2.body.id}`)

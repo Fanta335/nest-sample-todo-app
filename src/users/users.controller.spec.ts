@@ -9,17 +9,14 @@ describe('UsersController', () => {
     {
       id: 1,
       name: 'Test user 1',
-      createdAt: new Date(),
     },
     {
       id: 2,
       name: 'Test user 2',
-      createdAt: new Date(),
     },
     {
       id: 3,
       name: 'Test user 3',
-      createdAt: new Date(),
     },
   ];
 
