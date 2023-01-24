@@ -38,7 +38,7 @@ export class UsersService {
     if (res.affected === 0) {
       throw new NotFoundException("specified user doesn't exists.");
     }
-    return this.usersRepository.findOne({ where: { id } });
+    return this.findById(id);
   }
 
   async deleteUser(id: number): Promise<void> {

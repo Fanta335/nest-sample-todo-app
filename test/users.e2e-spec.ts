@@ -30,6 +30,7 @@ describe('Users', () => {
 
   it('Post user, get all, get by id', async () => {
     const testUser = {
+      id: 1,
       name: 'test user 1',
     };
     const data = await request(app.getHttpServer())
@@ -50,7 +51,7 @@ describe('Users', () => {
     const testUser2 = await request(app.getHttpServer())
       .get(`/users/${data.body.id}`)
       .expect(200);
-    expect(testUser2.body).toEqual(data.body);
+    expect(testUser2.body).toEqual({ ...data.body, tasks: [] });
     return request(app.getHttpServer())
       .delete(`/users/${data.body.id}`)
       .expect(200);
@@ -74,6 +75,7 @@ describe('Users', () => {
     expect(testUser2.body).toEqual({
       ...testUser1,
       id: expect.any(Number),
+      tasks: [],
     });
     const testUser3 = await request(app.getHttpServer())
       .patch(`/users/${testUser2.body.id}`)
@@ -82,6 +84,7 @@ describe('Users', () => {
     expect(testUser3.body).toEqual({
       ...data.body,
       name: 'Test user 1 updated',
+      tasks: [],
     });
     const updatedUser = await request(app.getHttpServer())
       .get(`/users/${data.body.id}`)
