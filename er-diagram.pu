@@ -1,0 +1,18 @@
+@startuml er
+
+entity "user" {
+  +id: INT(11)
+  --
+  name: VARCHAR(255)
+}
+
+entity "task" {
+  +id: INT(11)
+  --
+  name: VARCHAR(255)
+  authorId: VARCHAR(255)
+}
+
+user ||--o{ task
+
+@enduml
