@@ -10,19 +10,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Cache node_modules
-        id: node_modules_cache_id
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
-
       - name: Create .env.test file
         run: |
           echo "${{ secrets.TEST_ENV_FILE }}" > .env.test
 
       - name: Run test on docker compose
-        if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
         run: |
-          docker compose --env-file .env.test -f docker-compose.test.yml up --build --abort-on-container-exit
+          docker compose --env-file .env.test -f docker-compose.test.yml build
+          docker compose --env-file .env.test -f docker-compose.test.yml up --abort-on-container-exit
         working-directory: ./
