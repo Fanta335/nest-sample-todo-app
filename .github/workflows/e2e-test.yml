@@ -9,8 +9,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Cache node_modules
         id: node_modules_cache_id
@@ -24,6 +22,7 @@ jobs:
           echo "${{ secrets.TEST_ENV_FILE }}" > .env.test
 
       - name: Run test on docker compose
+        if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
         run: |
           docker compose --env-file .env.test -f docker-compose.test.yml up --build --abort-on-container-exit
         working-directory: ./
