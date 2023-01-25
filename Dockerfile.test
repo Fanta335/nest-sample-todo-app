@@ -3,4 +3,4 @@ RUN npm install -g @nestjs/cli
 WORKDIR /test-node-api
 COPY package.json yarn.lock /test-node-api/
 RUN yarn
-CMD ["yarn", "run", "test:e2e:watchAll"]
+CMD ["yarn", "run", "test:e2e"]
