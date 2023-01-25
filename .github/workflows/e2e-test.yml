@@ -19,20 +19,6 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Cache node_modules
-        id: node_modules_cache_id
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Cache node_modules
-        id: node_modules_cache_id
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
-
       - name: Create .env.test file
         run: |
           echo "${{ secrets.TEST_ENV_FILE }}" > .env.test
