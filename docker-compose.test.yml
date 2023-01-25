@@ -1,0 +1,44 @@
+version: '3.8'
+
+volumes:
+  test-db-data:
+
+services:
+  test-node-api:
+    container_name: test-node-api
+    build:
+      context: "."
+      dockerfile: "Dockerfile.test"
+    tty: true
+    stdin_open: true
+    restart: always
+    ports:
+      - '4000:3000'
+    volumes:
+      - '.:/test-node-api'
+    depends_on:
+      - test-mysql-db
+    links:
+      - test-mysql-db
+    env_file:
+      - .env.test
+    environment:
+      - DB_HOST=test-mysql-db
+
+  test-mysql-db:
+    container_name: test-mysql-db
+    image: mysql:8.0.28
+    restart: always
+    ports:
+      - '4444:3306'
+    volumes:
+      - 'test-db-data:/var/lib/mysql'
+    env_file:
+      - .env.test
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DBNAME}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      TZ: "Asia/Tokyo"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
