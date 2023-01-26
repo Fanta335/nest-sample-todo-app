@@ -1,6 +1,5 @@
 FROM node:18.13-slim
-RUN npm install -g @nestjs/cli
 WORKDIR /test-node-api
-COPY package*.json /test-node-api/
+COPY . /test-node-api/
 RUN npm install
-CMD ["npm", "run", "test:e2e"]
+# CMD ["npm", "run", "test:e2e"]
