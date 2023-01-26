@@ -19,7 +19,6 @@ export class UsersService {
   }
 
   findAllUsers(): Promise<User[]> {
-    console.log('hoge~');
     return this.usersRepository.find();
   }
 
