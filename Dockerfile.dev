@@ -1,6 +1,6 @@
 FROM node:18.13-slim
-RUN npm install -g @nestjs/cli
 WORKDIR /node-api
 COPY package*.json /node-api/
 RUN npm install
+COPY . /node-api/
 CMD ["npm", "run", "start:dev"]
