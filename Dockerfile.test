@@ -1,5 +1,6 @@
 FROM node:18.13-slim
 WORKDIR /test-node-api
-COPY . /test-node-api/
+COPY package*.json /test-node-api/
 RUN npm install
-# CMD ["npm", "run", "test:e2e"]
+COPY . /test-node-api/
+CMD ["npm", "run", "test:e2e"]
