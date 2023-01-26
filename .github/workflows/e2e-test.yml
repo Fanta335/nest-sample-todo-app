@@ -10,15 +10,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Cache
+      - name: Setup
         uses: actions/setup-node@v3
-        id: setup-node-id
+        id: setup_node_id
         with:
           node-version: 18
-          cache: npm
-
-      - name: Install dependencies
-        if: ${{ steps.setup-node-id.outputs.cache-hit != 'true' }}
+      
+      - name: Cache
+        uses: actions/cache@v3
+        id: node_modules_cache_id
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      - if: ${{ steps.setup_node_id.outputs.cache-hit != 'true' }}
         run: npm install
 
       - name: Create .env.test file
