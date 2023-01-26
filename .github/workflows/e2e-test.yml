@@ -30,6 +30,7 @@ jobs:
       - name: Create .env.test file
         run: |
           echo "${{ secrets.TEST_ENV_FILE }}" > .env.test
+          cat .env.test
 
       - name: Run test on docker compose
         run: |
