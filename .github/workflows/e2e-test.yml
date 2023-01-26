@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
       - if: ${{ steps.setup-node-id.outputs.cache-hit != 'true' }}
         run: npm install
-        run: npm ls --depth=0
+      - run: npm ls --depth=0
 
       - name: Create .env.test file
         run: |
