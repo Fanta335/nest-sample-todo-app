@@ -1,8 +1,5 @@
 name: e2e-test
-on:
-  push:
-    branches:
-      - develop
+on: [push]
 jobs:
   run-e2e-test:
     runs-on: ubuntu-latest
@@ -31,8 +28,10 @@ jobs:
         shell: bash
         env:
           TEST_ENV_FILE: ${{ secrets.TEST_ENV_FILE }}
-        run: |
-          echo "$TEST_ENV_FILE" > .env.test
+        run: echo "$TEST_ENV_FILE" > .env.test
+
+      - name: Unit test
+        run: npm run test
 
       - name: Run test on docker compose
         run: |
