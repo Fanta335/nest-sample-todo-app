@@ -30,17 +30,9 @@ jobs:
       - name: Create .env.test file
         shell: bash
         env:
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_DBNAME: ${{ secrets.DB_DBNAME }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_HOST: ${{ secrets.DB_HOST }}
+          TEST_ENV_FILE: ${{ secrets.TEST_ENV_FILE }}
         run: |
-          echo DB_PASSWORD="$DB_PASSWORD" >> .env.test
-          echo DB_DBNAME="$DB_DBNAME" >> .env.test
-          echo DB_USERNAME="$DB_USERNAME" >> .env.test
-          echo DB_PORT="$DB_PORT" >> .env.test
-          echo DB_HOST="$DB_HOST" >> .env.test
+          echo "$TEST_ENV_FILE" > .env.test
 
       - name: Run test on docker compose
         run: |
