@@ -1,7 +1,7 @@
 name: Test
 on: [push]
 jobs:
-  run-e2e-test:
+  Run-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
