@@ -28,12 +28,19 @@ jobs:
         run: npm install
 
       - name: Create .env.test file
+        shell: bash
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_DBNAME: ${{ secrets.DB_DBNAME }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_HOST: ${{ secrets.DB_HOST }}
         run: |
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env.test
-          echo "DB_DBNAME=${{ secrets.DB_DBNAME }}" >> .env.test
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env.test
-          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env.test
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env.test
+          echo DB_PASSWORD="$DB_PASSWORD" >> .env.test
+          echo DB_DBNAME="$DB_DBNAME" >> .env.test
+          echo DB_USERNAME="$DB_USERNAME" >> .env.test
+          echo DB_PORT="$DB_PORT" >> .env.test
+          echo DB_HOST="$DB_HOST" >> .env.test
 
       - name: Run test on docker compose
         run: |
