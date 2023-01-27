@@ -1,10 +1,7 @@
-name: e2e-test
-on:
-  push:
-    branches:
-      - develop
+name: Test
+on: [push]
 jobs:
-  run-e2e-test:
+  Run-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,14 +24,16 @@ jobs:
       - if: ${{ steps.setup_node_id.outputs.cache-hit != 'true' }}
         run: npm install
 
-      - name: Create .env.test file
+      - name: Create env file
         shell: bash
         env:
           TEST_ENV_FILE: ${{ secrets.TEST_ENV_FILE }}
-        run: |
-          echo "$TEST_ENV_FILE" > .env.test
+        run: echo "$TEST_ENV_FILE" > .env.test
 
-      - name: Run test on docker compose
+      - name: Run unit tests
+        run: npm run test
+
+      - name: Run E2E tests on docker
         run: |
           docker compose --env-file .env.test -f docker-compose.test.yml build
           docker compose --env-file .env.test -f docker-compose.test.yml up --abort-on-container-exit
